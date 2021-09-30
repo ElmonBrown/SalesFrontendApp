@@ -1,0 +1,15 @@
+{
+    "helloWorld": "Hello World!",
+    "@helloWorld": {
+      "description": "The conventional newborn programmer greeting"
+    },
+    "user": "User",
+    "password": "Password",
+    "login": "Login",
+
+    "catalogue": "Catalogue",
+    "history": "History",
+
+    "price": "Price",
+    "cart": "Cart"
+}

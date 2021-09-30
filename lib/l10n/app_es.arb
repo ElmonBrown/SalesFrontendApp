@@ -1,0 +1,13 @@
+{
+    "helloWorld": "¡Hola Mundo!",
+
+    "user": "Usuario",
+    "password": "Contraseña",
+    "login": "Ingresar",
+
+    "catalogue": "Catálogo",
+    "history": "Historial",
+
+    "price": "Precio",
+    "cart": "Carrito"
+}
