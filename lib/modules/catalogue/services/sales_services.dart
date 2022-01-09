@@ -6,7 +6,7 @@ import 'package:multiquimica_store_app/modules/catalogue/models/product.dart';
 import 'package:multiquimica_store_app/settings/app_connections.dart';
 
 class SalesService {
-  ApiHelper _helper = ApiHelper(apiURL: AppConnections.apiBaseUrl);
+  ApiHelper _helper = ApiHelper(apiURL: AppConnections.apiBaseUrl, token: AppConnections.token);
 
   Future<List<Category>> getCategories() async {
     var response = await _helper.get(AppConnections.sCategoriesList);

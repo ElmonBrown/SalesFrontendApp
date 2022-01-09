@@ -13,7 +13,7 @@ class AppColors {
   static const Color fieldsColor = Color(0xFFF7F7F7);
 
   // This primarySwatch has to be a color from material
-  static const Color primarySwatch = Colors.deepPurple;
+  static const MaterialColor primarySwatch = Colors.blue;
 
   static const Color infoTitleTextColor = Color(0xFF696767);
   static const Color infoTextTextColor = Color(0xFFF7F7F7);

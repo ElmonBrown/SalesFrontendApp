@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:multiquimica_store_app/common/components/image_card_button.dart';
 import 'package:multiquimica_store_app/modules/catalogue/view/products_page.dart';
 
-class CategoriesPage extends StatelessWidget {
-  CategoriesPage({Key? key}) : super(key: key);
+class CategoriesTabPage extends StatelessWidget {
+  CategoriesTabPage({Key? key}) : super(key: key);
 
   final List<String> assetNames = <String>[
     'assets/images/product_categories/industrial.jpg',

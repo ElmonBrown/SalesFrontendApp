@@ -1,5 +1,6 @@
 
 import 'package:flutter/material.dart';
+import 'package:multiquimica_store_app/common/components/item_cant_widget.dart';
 
 class GridCardButton extends StatelessWidget {
   final String title;
@@ -36,6 +37,7 @@ class GridCardButton extends StatelessWidget {
                 subTitle,
                 style: TextStyle(fontWeight: FontWeight.normal),
               ),
+              ItemCantWidget()
             ],
           ),
         ),

@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:multiquimica_store_app/common/components/cart_button.dart';
 import 'package:multiquimica_store_app/common/components/grid_card_button.dart';
+import 'package:multiquimica_store_app/common/components/product_tile.dart';
 import 'package:multiquimica_store_app/modules/catalogue/models/product.dart';
 import 'package:multiquimica_store_app/modules/catalogue/services/sales_services.dart';
+import 'package:multiquimica_store_app/modules/catalogue/view/product_detail_page.dart';
 
 class ProductsPage extends StatefulWidget {
   final String idCategory;
@@ -20,10 +23,25 @@ class _ProductsPageState extends State<ProductsPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(appBar: AppBar(title: Text('Products'),actions: [
-      IconButton(onPressed: () {}, icon: Icon(Icons.search)),
+    return Scaffold(appBar: AppBar(
+      title:   Center(
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+
+            IconButton(onPressed: () {}, icon: Icon(Icons.search, color: Colors.white70,)),
+            Text(AppLocalizations.of(context)!.products, style: TextStyle(color: Colors.white70),),
+
+          ],
+        ),
+      ),
+
+      actions: [
       IconButton(onPressed: _changeView, icon: Icon( showInGrid ? Icons.view_list_sharp :Icons.view_comfortable_sharp )),
-    ],),body: showInGrid ?_buildLGridView(context): _buildListView(context));
+
+      CartButton(),
+    ],
+    ),body: _buildProductsList(context));
   }
   void _changeView()
   {
@@ -32,57 +50,51 @@ class _ProductsPageState extends State<ProductsPage> {
     });
   }
 
-  Widget _buildLGridView(BuildContext context){
-    return GridView.count(
-      padding: EdgeInsets.all(8),
-        shrinkWrap: true,
-        crossAxisCount: 2,
-        crossAxisSpacing: 8.0,
-        mainAxisSpacing: 4.0,
-        children: _buildGridViewChildren(context),
-    );
-  }
-
-  List<Widget> _buildGridViewChildren(BuildContext context){
-    return items.map((e) => _buildProductGrid(context,Product(code: e.toString(), name: 'Product '+ e.toString()))).toList();
-  }
-
-  Widget _buildListView(BuildContext context){
+  Widget _buildProductsList(BuildContext context) {
     return FutureBuilder<List<Product>>(
       future: _service.getProducts(widget.idCategory),
-      builder: (BuildContext context, AsyncSnapshot snapshot) {
+      builder: (BuildContext context, AsyncSnapshot<List<Product>> snapshot) {
         if (snapshot.hasData && snapshot.data != null) {
-          return ListView.builder(
-              itemCount: snapshot.data.length,
-              itemBuilder: (BuildContext context, int index) =>
-                    _buildProductTile(context, snapshot.data[index]));
+          return showInGrid ?_buildLGridView(context, snapshot.data!): _buildProductListView(context,snapshot.data!);
         }
         return Center(child: CircularProgressIndicator());
       },
     );
   }
 
-  Widget _buildProductTile( BuildContext context, Product product) {
-      return ListTile(
-          contentPadding: EdgeInsets.only(left: 20, right: 40),
-          leading: Icon(
-            Icons.image,
-            size: 60,
-            color: Colors.blueGrey,
-          ),
-          title: Text(
-            product.name,
-          ),
-          subtitle: Text(AppLocalizations.of(context)!.price + ": " + product.price.toString()) ,
-          trailing: Icon(
-            Icons.add_circle_outline,
-            size: 40,
-            color: Colors.red,
-          ),
-          onTap: () {});
+  Widget _buildLGridView(BuildContext context, List<Product> products){
+    return GridView.count(
+      padding: EdgeInsets.all(8),
+        shrinkWrap: true,
+        crossAxisCount: 2,
+        crossAxisSpacing: 8.0,
+        mainAxisSpacing: 4.0,
+        children: _buildGridViewChildren(context, products),
+    );
   }
 
-  Widget _buildProductGrid( BuildContext context, Product product) {
-    return GridCardButton(title: product.name,subTitle: product.price.toString(),onTap: (){});
+  List<Widget> _buildGridViewChildren(BuildContext context, List<Product> products){
+    return products.map((e) => _buildProductGridView(context,e)).toList();
+  }
+
+  Widget _buildProductListView(BuildContext context, List<Product> products){
+    return  ListView.builder(
+              itemCount: products.length,
+              itemBuilder: (BuildContext context, int index) =>
+                    _buildProductTile(context, products[index]));
+
+  }
+
+  Widget _buildProductTile( BuildContext context, Product product) {
+      return ProductTile(product: product);
+  }
+
+  Widget _buildProductGridView( BuildContext context, Product product) {
+    return GridCardButton(title: product.name,subTitle: product.price.toString(),onTap: ()=> _goToProductDetail(context));
+  }
+
+  void _goToProductDetail(BuildContext context) {
+    Navigator.of(context)
+        .push(MaterialPageRoute(builder: (context) => ProductDetailPage()));
   }
 }

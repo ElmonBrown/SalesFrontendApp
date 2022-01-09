@@ -5,11 +5,19 @@
     },
     "user": "User",
     "password": "Password",
-    "login": "Login",
+    "login": "Log in",
+    "logout": "Log Out",
 
     "catalogue": "Catalogue",
     "history": "History",
+    "orders": "Orders",
 
     "price": "Price",
-    "cart": "Cart"
+    "cart": "Cart",
+
+    "products": "Products",
+
+    "errorMessage": "An error has occurred",
+    "requiredField": "Required field",
+    "loginErrorMessage": "Could not login"
 }

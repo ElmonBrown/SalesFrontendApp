@@ -4,18 +4,21 @@ import 'dart:io';
 import 'package:http/http.dart' as http;
 
 class ApiHelper {
+  Uri _apiUri = Uri();
+  Map<String, String> _headers = {};
+
 
   ApiHelper({
     required String apiURL,
+    String token =''
   }){
     _apiUri = Uri.parse(apiURL);
+    _headers = <String, String>{
+      HttpHeaders.authorizationHeader: 'Bearer ' + token,
+      HttpHeaders.contentTypeHeader: 'application/json',
+    };
   }
-  String token ='';
-  Uri _apiUri = Uri();
-  Map<String, String> _headers = <String, String>{
-    HttpHeaders.authorizationHeader: 'Bearer ' +'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6InN5c2FkbWluIiwiZW1haWwiOiJzeXNhZG1pbkBhZG1pbi5jb20iLCJzdWIiOiJhMjgwZjU5Yy00NzI3LTQ4MGQtYTc3MS01NDliYjQ3YTZjZjYiLCJhdXRoX3RpbWUiOiI5LzMwLzIwMjEgNzowNzoyMCBQTSIsImp0aSI6IjIwZWViZWE3LWVkMzgtNGQ1NC04YmY1LWRmMDc0MWQ1Yjg2NyIsImV4cCI6MTYzMzExNTI0MCwiaXNzIjoiTVFETy5DT05ORUNULlNBTEUuQVBQIiwiYXVkIjoiTVFETy5DT05ORUNULlNBTEUuQVBQIn0.77bnhxhPfoIAenEeyGcyOzeDoQRnaYput7ccc2mkndU',
-    HttpHeaders.contentTypeHeader: 'application/json',
-  };
+
 
   Future<dynamic> get(String requestPath) async {
     var response;
@@ -41,7 +44,7 @@ class ApiHelper {
 
 
     if (response == null) {
-      print('conection error');
+      print('connection error');
       return null;
     } else {
       print('Response status: ${response.statusCode}');

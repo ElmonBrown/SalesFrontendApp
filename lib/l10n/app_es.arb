@@ -4,10 +4,18 @@
     "user": "Usuario",
     "password": "Contraseña",
     "login": "Ingresar",
+    "logout": "Salir",
 
     "catalogue": "Catálogo",
     "history": "Historial",
+    "orders": "Ordenes",
 
     "price": "Precio",
-    "cart": "Carrito"
+    "cart": "Carrito",
+
+    "products": "Productos",
+
+    "errorMessage": "Ha ocurrido un error",
+    "requiredField": "Campo requerido",
+    "loginErrorMessage": "Error al loguear"
 }

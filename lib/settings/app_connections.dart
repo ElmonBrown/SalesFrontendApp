@@ -8,12 +8,12 @@ class AppConnections {
   //API ENDPOINTS
 
   //LOGIN
-  static const String sLoginSignIn = "/security/api/auth/signin";
+  static const String sLoginSignIn = "/api/security/api/auth/signin";
 
   //SALES
-  static const String sCategoriesList = "/api/category";
-  static const String sCatalogueList = "/api/catalogue/list/";
-  static const String SCatalogueDetail = "/api/catalogue/detail/";
+  static const String sCategoriesList = "/api/api/category";
+  static const String sCatalogueList = "/api/api/catalogue/list/";
+  static const String SCatalogueDetail = "/api/api/catalogue/detail/";
 
   //TEMPORAL
   static String token = "";

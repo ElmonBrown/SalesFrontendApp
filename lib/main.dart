@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:multiquimica_store_app/settings/app_colors.dart';
+import 'package:multiquimica_store_app/settings/app_strings.dart';
 
 import 'modules/login/view/login_page.dart';
 
@@ -17,9 +19,9 @@ class MultiquimicaStoreApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       onGenerateTitle: (BuildContext context) =>
-      AppLocalizations.of(context)!.helloWorld,
+      AppStrings.appName,
       theme: ThemeData(
-        primarySwatch: Colors.red,
+        primarySwatch: AppColors.primarySwatch,
       ),
       home: LoginPage(),
       localizationsDelegates: AppLocalizations.localizationsDelegates,

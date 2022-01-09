@@ -5,12 +5,14 @@ class Product {
     required this.code,
     this.name :'Product 00',
     this.price: 0,
+    this.cant: 0,
     this.imageUrl,
   });
 
   String code;
   String name;
   int price;
+  int cant;
   String? imageUrl;
 
   factory Product.fromJson(String str) => Product.fromMap(json.decode(str));
