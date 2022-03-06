@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:multiquimica_store_app/settings/app_colors.dart';
 
 class ImageCardButton extends StatelessWidget {
   final String text;
@@ -22,23 +23,16 @@ class ImageCardButton extends StatelessWidget {
       ),
       child: InkWell(
         onTap: onTap,
-        child: Stack(
+        child: Column(
           children: [
             Image.asset(assetName),
-            Positioned.fill(
-                child: Align(
-              child: Container(
-                padding: EdgeInsets.only(left: 8),
-                alignment: Alignment.centerLeft,
-                height: 30,
-                width: double.infinity,
-                color: Colors.white70,
+            Expanded(
+              child: Center(
                 child: Text(
-                  text, style: TextStyle(fontSize: 18),
+                  text, style: TextStyle(fontSize: 14, color: AppColors.primarySwatch, fontWeight: FontWeight.bold), textAlign: TextAlign.center,
                 ),
               ),
-              alignment: Alignment.bottomCenter,
-            ))
+            ),
           ],
         ),
       ),

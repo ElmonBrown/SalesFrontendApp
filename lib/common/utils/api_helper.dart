@@ -32,10 +32,52 @@ class ApiHelper {
     return response;
   }
 
-  Future<dynamic> post(String requestPath, {required Map<String, dynamic> body}) async {
+  Future<dynamic> post(String requestPath, {Map<String, dynamic>? body}) async {
     http.Response? response;
     try{
       response = await http.post(_apiUri.replace(path: requestPath),
+          headers: _headers,
+          body: jsonEncode(body));
+    } on SocketException{
+      print('Connection Error');
+    }
+
+
+    if (response == null) {
+      print('connection error');
+      return null;
+    } else {
+      print('Response status: ${response.statusCode}');
+      print('Response body: ${response.body}');
+      return response;
+    }
+  }
+
+  Future<dynamic> put(String requestPath, {Map<String, dynamic>? body}) async {
+    http.Response? response;
+    try{
+      response = await http.put(_apiUri.replace(path: requestPath),
+          headers: _headers,
+          body: jsonEncode(body));
+    } on SocketException{
+      print('Connection Error');
+    }
+
+
+    if (response == null) {
+      print('connection error');
+      return null;
+    } else {
+      print('Response status: ${response.statusCode}');
+      print('Response body: ${response.body}');
+      return response;
+    }
+  }
+
+  Future<dynamic> delete(String requestPath, {Map<String, dynamic>? body}) async {
+    http.Response? response;
+    try{
+      response = await http.delete(_apiUri.replace(path: requestPath),
           headers: _headers,
           body: jsonEncode(body));
     } on SocketException{

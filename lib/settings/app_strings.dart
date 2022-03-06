@@ -3,5 +3,5 @@ class AppStrings {
 
   //EXAMPLE
   static const String example = "example";
-  static const String appName = "MQ Storage";
+  static const String appName = "MQ Connect";
 }

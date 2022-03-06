@@ -4,7 +4,7 @@ import 'package:multiquimica_store_app/common/components/cart_button.dart';
 import 'package:multiquimica_store_app/common/components/grid_card_button.dart';
 import 'package:multiquimica_store_app/common/components/product_tile.dart';
 import 'package:multiquimica_store_app/modules/catalogue/models/product.dart';
-import 'package:multiquimica_store_app/modules/catalogue/services/sales_services.dart';
+import 'package:multiquimica_store_app/modules/catalogue/services/catalogue_service.dart';
 import 'package:multiquimica_store_app/modules/catalogue/view/product_detail_page.dart';
 
 class ProductsPage extends StatefulWidget {
@@ -18,8 +18,8 @@ class ProductsPage extends StatefulWidget {
 class _ProductsPageState extends State<ProductsPage> {
   final List<int> items = List.generate(100, (index) => index);
 
-  final SalesService _service = new SalesService();
-  bool showInGrid = false;
+  final CatalogueService _service = new CatalogueService();
+  bool showInGrid = true;
 
   @override
   Widget build(BuildContext context) {
@@ -67,6 +67,8 @@ class _ProductsPageState extends State<ProductsPage> {
       padding: EdgeInsets.all(8),
         shrinkWrap: true,
         crossAxisCount: 2,
+        // childAspectRatio: 0.6,
+        childAspectRatio: 0.8,
         crossAxisSpacing: 8.0,
         mainAxisSpacing: 4.0,
         children: _buildGridViewChildren(context, products),
@@ -74,11 +76,13 @@ class _ProductsPageState extends State<ProductsPage> {
   }
 
   List<Widget> _buildGridViewChildren(BuildContext context, List<Product> products){
-    return products.map((e) => _buildProductGridView(context,e)).toList();
+    return products.map((e) => _buildProductGridTile(context,e)).toList();
   }
 
   Widget _buildProductListView(BuildContext context, List<Product> products){
-    return  ListView.builder(
+    return  ListView.separated(
+      padding: EdgeInsets.all(8),
+              separatorBuilder: (BuildContext context, int index)=> Divider( thickness: 1.5, indent: 15, endIndent: 15,),
               itemCount: products.length,
               itemBuilder: (BuildContext context, int index) =>
                     _buildProductTile(context, products[index]));
@@ -89,12 +93,12 @@ class _ProductsPageState extends State<ProductsPage> {
       return ProductTile(product: product);
   }
 
-  Widget _buildProductGridView( BuildContext context, Product product) {
-    return GridCardButton(title: product.name,subTitle: product.price.toString(),onTap: ()=> _goToProductDetail(context));
+  Widget _buildProductGridTile( BuildContext context, Product product) {
+    return GridCardButton(product: product, onTap: ()=> _goToProductDetail(context, product));
   }
 
-  void _goToProductDetail(BuildContext context) {
+  void _goToProductDetail(BuildContext context, Product product) {
     Navigator.of(context)
-        .push(MaterialPageRoute(builder: (context) => ProductDetailPage()));
+        .push(MaterialPageRoute(builder: (context) => ProductDetailPage(product: product,)));
   }
 }

@@ -1,43 +1,58 @@
 
 import 'package:flutter/material.dart';
-import 'package:multiquimica_store_app/common/components/item_cant_widget.dart';
+import 'package:multiquimica_store_app/modules/catalogue/models/product.dart';
+import 'package:multiquimica_store_app/settings/app_colors.dart';
 
 class GridCardButton extends StatelessWidget {
-  final String title;
-  final String subTitle;
+  final Product product;
   final GestureTapCallback onTap;
 
-  const GridCardButton({Key? key, this.title:'', this.subTitle:'', required this.onTap})
+  const GridCardButton({Key? key, required this.onTap, required this.product})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Card(
       color: Colors.white,
-      margin: EdgeInsets.symmetric(vertical: 8),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(15.0),
+      ),
+      margin: EdgeInsets.symmetric(vertical: 8,),
       child: InkWell(
         onTap: onTap,
         child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 16.0),
+          padding: const EdgeInsets.only(top: 4.0, bottom: 4.0 , left: 10.0, right: 5),
           child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
               Icon(
                 Icons.image,
-                size: 60,
-                color: Colors.blueGrey,
+                size: 160,
+                color: AppColors.primarySwatch,
               ),
               SizedBox(
                 height: 2,
               ),
               Text(
-                title,
-                style: TextStyle(fontWeight: FontWeight.bold),
+                product.name,
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
               ),
               Text(
-                subTitle,
+                'short detail',
                 style: TextStyle(fontWeight: FontWeight.normal),
               ),
-              ItemCantWidget()
+          /*    Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    r'RD$ ' +
+                    product.price.toString(),
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                  ),
+                  ItemCantWidgetS(item: new Item(code: product.code, price: product.price, name: product.name))
+                ],
+              ),*/
             ],
           ),
         ),

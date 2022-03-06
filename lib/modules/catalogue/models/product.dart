@@ -1,19 +1,29 @@
 import 'dart:convert';
 
+import 'package:multiquimica_store_app/modules/catalogue/models/presentation.dart';
+
+import 'category.dart';
+
 class Product {
   Product({
     required this.code,
-    this.name :'Product 00',
-    this.price: 0,
-    this.cant: 0,
-    this.imageUrl,
+    required this.name,
+    this.description,
+    this.category,
+    this.presentations,
+    required this.price,
+    this.currency,
+    this.cant,
   });
 
   String code;
   String name;
+  String? description;
+  Category? category;
+  List<Presentation>? presentations;
   int price;
-  int cant;
-  String? imageUrl;
+  String? currency;
+  int? cant;
 
   factory Product.fromJson(String str) => Product.fromMap(json.decode(str));
 
@@ -22,14 +32,20 @@ class Product {
   factory Product.fromMap(Map<String, dynamic> json) => Product(
     code: json["code"],
     name: json["name"],
+    description: json["description"],
+    category: Category.fromMap(json["category"]),
+    presentations: json["presentations"] == null ? null : List<Presentation>.from(json["presentations"].map((x) => Presentation.fromMap(x))),
     price: json["price"],
-    imageUrl: json["imageURL"],
+    currency: json["currency"],
   );
 
   Map<String, dynamic> toMap() => {
     "code": code,
     "name": name,
+    "description": description,
+    "category": category?.toMap(),
+    "presentations": List<dynamic>.from(presentations!.map((x) => x.toMap())),
     "price": price,
-    "imageURL": imageUrl,
+    "currency": currency,
   };
 }

@@ -1,48 +1,146 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:multiquimica_store_app/common/components/item_cant_widget.dart';
+import 'package:multiquimica_store_app/common/streams/cart_items_bloc.dart';
+import 'package:multiquimica_store_app/modules/catalogue/models/product.dart';
+import 'package:multiquimica_store_app/modules/catalogue/services/catalogue_service.dart';
+import 'package:multiquimica_store_app/settings/app_colors.dart';
 
 class ProductDetailPage extends StatelessWidget {
-  const ProductDetailPage({Key? key}) : super(key: key);
+  final Product product;
+  final CatalogueService _catalogService = new CatalogueService();
+  final CartItemsBloc _cartBloc = CartItemsBloc();
+
+  ProductDetailPage({Key? key, required this.product}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Product Details'),),
-      body: Center(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Icon(
-              Icons.image,
-              size: 200,
-              color: Colors.blueGrey,
-            ),
-            SizedBox(
-              height: 2,
-            ),
-            Text(
-              'Product Name',
-              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 32),
-            ),
-            Text(
-              'Price: 0',
-              style: TextStyle(fontWeight: FontWeight.normal, fontSize: 24),
-            ),
-
-
-            ItemCantWidget(),
-            SizedBox(
-              height: 4,
-            ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Text(_description),
-            ),
-          ],),
+      backgroundColor: Colors.white,
+      appBar: AppBar(
+        title: Text('Product Details'),
+      ),
+      body: FutureBuilder<Product?>(
+          future: _catalogService.getProductDetail(product.code),
+          initialData: product,
+          builder: (context, snapshot) {
+            Product p = snapshot.data != null ? snapshot.data! : product;
+            return Center(
+              child: ListView(
+                children: [
+                  Stack(
+                    children: [
+                      Container(
+                        decoration: BoxDecoration(
+                            color: AppColors.primarySwatch,
+                            border: Border(bottom: BorderSide(
+                                color: Colors.transparent))),
+                        padding: EdgeInsets.only(bottom: 80),
+                        width: double.infinity,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Center(
+                              child: Icon(
+                                Icons.image,
+                                size: 250,
+                                color: Colors.white,
+                              ),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 32.0),
+                              child: Text(
+                                p.name,
+                                style: TextStyle(fontWeight: FontWeight.bold,
+                                  fontSize: 32,
+                                  color: Colors.white,),
+                              ),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 32.0),
+                              child: Text(
+                                'short detail',
+                                style: TextStyle(fontWeight: FontWeight.normal,
+                                    fontSize: 16,
+                                    color: Colors.white),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      Positioned.fill(
+                        child: Align(
+                          alignment: Alignment.bottomCenter,
+                          child: Container(
+                            height: 50,
+                            width: double.infinity,
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.only(
+                                topRight: Radius.circular(30),
+                                topLeft: Radius.circular(30),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 18.0),
+                    child: Text(p.description ?? '',
+                        style: TextStyle(fontSize: 18, color: Colors.black54)),
+                  ),
+                  SizedBox(
+                    height: 30,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(18.0),
+                    child: SizedBox(
+                      height: 40,
+                      width: double.infinity,
+                      child: ElevatedButton(
+                        onPressed: _onAddItem,
+                        child: Text('Agregar al Carrito'),
+                        style: ElevatedButton.styleFrom(
+                          shape: new RoundedRectangleBorder(
+                            borderRadius: new BorderRadius.circular(18.0),
+                          ),
+                        ),
+                      ),
+                    ),
+                  )
+                  /* Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 32.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        r'RD$ '+
+                        product.price.toString(),
+                        style: TextStyle(fontWeight: FontWeight.normal, fontSize: 24),
+                      ),
+                      ItemCantWidgetS(
+                        item: new Item(
+                            code: product.code, price: product.price, name: product.name),
+                      ),
+                    ],
+                  ),
+                ),*/
+                ],
+              ),
+            );
+          }
       ),
     );
   }
+  
+  void _onAddItem() {
+    //TODO: pass parameters and await
+    _cartBloc.addNew("5Mat", "2", 3);
+  }
 
-  final String _description = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.';
+  final String _description =
+      'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.';
 }
