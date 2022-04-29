@@ -32,8 +32,10 @@ class AppConnections {
   static const String sShoppingCarQuotation = _shoppingCarBaseUri + "/quotation";
 
   //ORDERS
-  static const String sOrderGetRange = "/api/order/search/list?DateStart=2022-01-01&DateEnd=2022-12-31";
-  static const String sOrderGetDetail = "/api/order/search/detail?DateStart=2022-01-01&DateEnd=2022-02-02&Status=1";
+  static const String sOrderGetAll = "/api/api/order/search/list";
+  static const String sOrderGetRange = "/api/api/order/search/list?DateStart=2022-01-01&DateEnd=2022-12-31";
+  static const String sOrderGetRangeDetail = "/api/api/order/search/detail?DateStart=2022-01-01&DateEnd=2022-02-02&Status=1";
+  static const String sOrderGetDetail = "/api/api/order/";
 
   //TEMPORAL
   static String token = "";

@@ -1,7 +1,9 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:multiquimica_store_app/modules/home/view/home_page.dart';
 import 'package:multiquimica_store_app/modules/login/services/login_service.dart';
+import 'package:multiquimica_store_app/settings/app_colors.dart';
 import 'package:multiquimica_store_app/settings/app_connections.dart';
 import 'package:multiquimica_store_app/settings/app_strings.dart';
 
@@ -19,6 +21,26 @@ class _LoginPageState extends State<LoginPage> {
 
   final FocusNode _passwordFocus = FocusNode();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+
+  bool hasInit = false;
+  late double height = 0;
+  late double width = 0;
+
+  @override
+  void initState() {
+
+    super.initState();
+    // height = MediaQuery.of(context).size.height / 2;
+    // width = MediaQuery.of(context).size.width;
+    // Rebuild the screen after 3s which will process the animation from green to blue
+    // Future.delayed(Duration(seconds: 3)).then((value) => setState(() {
+    //   firstState = true;
+    // }));
+
+    setState(() {
+      hasInit = true;
+    });
+  }
 
   @override
   void dispose() {
@@ -54,8 +76,10 @@ class _LoginPageState extends State<LoginPage> {
     return GestureDetector(
       child: Stack(
         children: [
+
           _buildBackGround(),
           _buildForm(),
+
         ],
       ),
       onTap: () => FocusScope.of(context).requestFocus(
@@ -73,18 +97,38 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   Widget _buildAnimatedBackground(){
+    height = hasInit? 0:  MediaQuery.of(context).size.height / 2;
+    width = MediaQuery.of(context).size.width;
     return Stack(
       children: [
-        AnimatedPositioned(duration: Duration(milliseconds: 500 ),
-          top: _hidePassword ? 0 :325,
-          child: Image.asset("assets/images/login_bg/bg_top.png", width: 400,),
+        Positioned(
+          top: 0,
+          child: Column(
+            children: [
+              _buildAnimatedContainer(),
+              Image.asset("assets/images/login_bg/bg_top.png", width: width,),
+            ],
+          ),
         ),
-
-        AnimatedPositioned(duration: Duration(milliseconds: 500),
-          bottom: _hidePassword ? 0 :325,
-          child: Image.asset("assets/images/login_bg/bg_bot.png", width: 400,),
+        Positioned(
+          bottom: 0,
+          child: Column(
+            children: [
+              Image.asset("assets/images/login_bg/bg_bot.png", width: width,),
+              _buildAnimatedContainer()
+            ],
+          ),
         )
       ],
+    );
+  }
+
+  Widget _buildAnimatedContainer(){
+    return AnimatedContainer(
+      duration: Duration(milliseconds: 500 ),
+      color: AppColors.primaryColor,
+      height: height,
+      width: width,
     );
   }
 

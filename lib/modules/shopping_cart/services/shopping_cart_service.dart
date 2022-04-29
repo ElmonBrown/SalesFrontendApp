@@ -44,7 +44,7 @@ class ShoppingCartService{
     return response?.statusCode == 200;
   }
 
-  Future<bool> quote(String id) async {
+  Future<bool> quote() async {
     var response = await _helper.post(AppConnections.sShoppingCarQuotation,);
     return response?.statusCode == 200;
   }

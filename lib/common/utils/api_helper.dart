@@ -24,6 +24,7 @@ class ApiHelper {
     var response;
     try {
       response = await http.get(_apiUri.replace(path: requestPath),headers: _headers);
+      print('Request: $requestPath');
       print('Response status: ${response.statusCode}');
       print('Response body: ${response.body}');
     } on SocketException {
@@ -47,6 +48,7 @@ class ApiHelper {
       print('connection error');
       return null;
     } else {
+      print('Request: $requestPath');
       print('Response status: ${response.statusCode}');
       print('Response body: ${response.body}');
       return response;
@@ -68,6 +70,7 @@ class ApiHelper {
       print('connection error');
       return null;
     } else {
+      print('Request: $requestPath');
       print('Response status: ${response.statusCode}');
       print('Response body: ${response.body}');
       return response;
@@ -89,6 +92,7 @@ class ApiHelper {
       print('connection error');
       return null;
     } else {
+      print('Request: $requestPath');
       print('Response status: ${response.statusCode}');
       print('Response body: ${response.body}');
       return response;

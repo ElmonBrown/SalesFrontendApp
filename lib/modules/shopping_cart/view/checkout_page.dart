@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:multiquimica_store_app/modules/shopping_cart/view/payment_page.dart';
 import 'package:multiquimica_store_app/settings/app_colors.dart';
 
 class CheckoutPage extends StatelessWidget {
@@ -104,7 +105,7 @@ class CheckoutPage extends StatelessWidget {
                   fontWeight: FontWeight.bold,
                   color: AppColors.primarySwatch),
             ),
-            onTap: () {},
+            onTap: ()=> _goToPayment(context),
           ),
           ElevatedButton(
             onPressed: () {},
@@ -118,5 +119,10 @@ class CheckoutPage extends StatelessWidget {
         ],
       ),
     );
+  }
+  
+  void _goToPayment(BuildContext context){
+    Navigator.of(context)
+        .push(MaterialPageRoute(builder: (context) => PaymentPage()));
   }
 }

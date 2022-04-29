@@ -28,7 +28,7 @@ class GridCardButton extends StatelessWidget {
             children: <Widget>[
               Icon(
                 Icons.image,
-                size: 160,
+                size: 140,
                 color: AppColors.primarySwatch,
               ),
               SizedBox(

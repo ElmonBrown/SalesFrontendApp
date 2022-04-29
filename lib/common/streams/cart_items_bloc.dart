@@ -67,6 +67,16 @@ class CartItemsBloc {
     //getAll();
   }
 
+
+  quote() async {
+    await _service.quote();
+    await getAll();
+  }
+  ///returns true when there is no items with price 0
+  bool verifyQuotation(){
+    return !items.any((element) => element.price == 0);
+  }
+
   int getItemCant(String itemCode) {
     return _find(itemCode)?.cant ?? 0;
   }

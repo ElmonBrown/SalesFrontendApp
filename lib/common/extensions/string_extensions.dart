@@ -11,7 +11,7 @@ extension Formatters  on String {
 
 extension Converters  on String {
   int toInt() {
-    return int.parse(this);
+    return int.tryParse(this) ?? 0;
   }
 
   double get doubleVal => double.parse(this);

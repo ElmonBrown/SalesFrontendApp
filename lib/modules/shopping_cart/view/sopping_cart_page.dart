@@ -18,9 +18,6 @@ class ShoppingCartPage extends StatefulWidget {
 
 class _ShoppingCartPageState extends State<ShoppingCartPage> {
   final CartItemsBloc _cartBloc = CartItemsBloc();
-
-  bool isQuoted = true;
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -81,6 +78,7 @@ class _ShoppingCartPageState extends State<ShoppingCartPage> {
             stream: _cartBloc.allItemsStream,
             builder: (context, snapshot) {
               double _total = _cartBloc.getTotal();
+              bool isQuoted = _cartBloc.verifyQuotation();
               return Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
@@ -90,7 +88,7 @@ class _ShoppingCartPageState extends State<ShoppingCartPage> {
                   ),
                   ElevatedButton(
                       onPressed:
-                          _total > 0 ? () => _goToCheckOut(context) : null,
+                      isQuoted ? () => _goToCheckOut(context) : _quote,
                       child: Text(isQuoted? 'Realizar Pedido' : 'Cotizar'))
                 ],
               );
@@ -99,13 +97,21 @@ class _ShoppingCartPageState extends State<ShoppingCartPage> {
     );
   }
 
+  VoidCallback? _getFinishButtonFunction(){
+    double _total = _cartBloc.getTotal();
+    bool isQuoted = _cartBloc.verifyQuotation();
+    if(isQuoted){
+    }
+    return null;
+  }
+
   void _goToCheckOut(BuildContext context) {
     Navigator.of(context)
         .push(MaterialPageRoute(builder: (context) => CheckoutPage()));
   }
 
-  void _quote(BuildContext context) {
-
+  void _quote() {
+     _cartBloc.quote();
   }
 
   _showClearConfirmDialog(BuildContext context) {
